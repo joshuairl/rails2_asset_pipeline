@@ -17,6 +17,11 @@ module Rails2AssetPipeline
     Dir[Rails.root.join("app", "assets", "*")].each do |folder|
       @env.append_path folder
     end
+    
+    #ENABLED SPROCKETS ASSET CACHING
+    #MAJOR PERFORMANCE BOOST FOR CHANGED FILES AND SERVING OVER HTTP.
+    @env.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
+    
     # TODO vendor + lib
     yield @env if block_given?
     @env
